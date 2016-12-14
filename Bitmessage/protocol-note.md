@@ -37,7 +37,7 @@
 |-----------|-----------------|
 |0xE9BEB4D9|E9 BE B4 D9|
 
-### <font color = red>Variable length integer</font>(?)
+### Variable length integer :exclamation: :question:
 > Varints **MUST** use the **minimum** possible number of bytes to encode a value(for **saving space**)
 
 |value        |storage length|format |
@@ -75,7 +75,7 @@
 |IPv6/4(16, char[16])       |IPv6 address. IPv4(12 bytes 00 00 00 00 00 00 00 00 00 00 FF FF, <-~ the 4 bytes of the IPv4 address).|
 |port(2, uint16_t)          |**port** number|
 
-### <font color = red>Inventory Vectors</font>
+### Inventory Vectors :exclamation:
 > used for ->3 other nodes about **objects** they have or **data** which is being requested. Two rounds of SHA-512 are used, => a 64 byte hash. Only the **first 32** bytes are used; the later 32 bytes are ignored
 
 #### ivs consist of the following data format:
@@ -83,7 +83,7 @@
 |---------------------------|------------|
 |hash(32, char[32])         |hash of the object|
 
-### Encrypted payload(表格?)
+### Encrypted payload(表格 :question:)
 > Bitmessage uses **ECIES** to encrypt its messages.
 
 |description(size, data type)|comments    |
@@ -97,13 +97,13 @@
 |encrypted(?, uchar[])      |**Cipher text**|
 |MAC(32, uchar[]   )        |HMACSHA256 **Message Authentication Code**|
 
-### <font color = red>Unencrypted Message Data</font>
+### Unencrypted Message Data :exclamation:
 |description(size, data type)   |comments    |
 |-------------------------------|------------|
-|msg_version(1+, var_int)       |Message format version. This field is <font color = red>not included after the protocol v3 upgrade period</font>.|
+|msg_version(1+, var_int)       |Message format version. This field is **not included after the protocol v3 upgrade period** :exclamation:.|
 |address_version(1+, var_int)   |**Sender's address version number** needed in order to **calculate the sender's address to show in the UI**, and also to allow for **forwards compatible changes** to the **public-key data** included below.|
 |stream(1+, var_int)            |**Sender's stream number**|
-|behavior bitfield(4, uint32_t) |<font color = red>A **bitfield** of **optional behaviors and features** that can be expected from the node with this **pubkey** included in this **msg message**(the sender's pubkey).</font>|
+|behavior bitfield(4, uint32_t) |A **bitfield** of **optional behaviors and features** that can be expected from the node with this **pubkey** included in this **msg message**(the sender's pubkey). :exclamation:|
 |public signing key(64, uchar[])|The **ECC** public key used for **signing** (**uncompressed** format; normally **prepended with \x04** )|
 |public encryption key(64, uchar[])|The **ECC** public key used for **encryption** (uncompressed format; normally prepended with \x04 )|
 |nonce_trials_per_byte(1+, var_int)|Used to **calculate the difficulty target of messages accepted by this node**. higher => more difficult the POW before this individual will accept the message. **the average number of nonce trials a node** will have to perform to **meet** the POW requirement. **1000** is the network minimum so any lower values will be automatically raised to 1000. This field is new and is only included when the **address_version >= 3**.|
@@ -125,7 +125,7 @@
 |2(SIMPLE)  |UTF-8. Uses 'Subject' and 'Body' sections. No MIME is used. **messageToTransmit = 'Subject:' + subject + '\n' + 'Body:' + message**|
 |3(EXTENDED)|A data structure in **msgpack**, then **compressed with zlib**. Null data type is encoded as an empty string, and booleans as an integer 0 (false) or 1 (true). Text fields are encoded using UTF-8. **v5** and newer address versions MUST support this. Proposal, exact structure pending standardisation.|
 
-> <font color = red>Further values for the message encodings can be decided upon by the community. Any MIME or MIME-like encoding format, should they be used, should make use of **Bitmessage's 8-bit bytes**.</font>?
+> Further values for the message encodings can be decided upon by the community. Any MIME or MIME-like encoding format, should they be used, should make use of **Bitmessage's 8-bit bytes**. :question:
 
 ### Pubkey bitfield features
 |bit(name)              |description|
@@ -134,7 +134,7 @@
 |1(undefined)           |The next most significant bit. Undefined|
 |...(...)               |...|
 |29(extended_encoding)  |**Receiving node** supports **extended encoding**.|
-|30(include_destination)|<font color = red>**Receiving node** expects that the **RIPE hash encoded in their address** preceedes the encrypted message data of **msg messages** bound for them.</font>|
+|30(include_destination)|**Receiving node** expects that the **RIPE hash encoded in their address** preceedes the encrypted message data of **msg messages** bound for them. :exclamation:|
 |31(does_ack)           |If **true**, the **receiving node** does **send acknowledgements** (rather than dropping them).|
 
 ## Message types
@@ -151,8 +151,8 @@
 |timestamp(8, int64_t)       |standard UNIX timestamp in **seconds**|
 |addr_recv(26, net_addr)     |The network address of the node receiving this message (**not including the time or stream number**)|
 |addr_from(26, net_addr)     |The network address of the node emitting this message (**not including the time or stream number** and the **ip itself** is **ignored** by the receiver)|
-|nonce(8, uint64_t)|<font color = red>**Random** nonce used to **detect connections to self**.</font>|
-|user_agent(1+, var_str)     |<font color = red>**User Agent**</font> (0x00 if string is 0 bytes long). Sending nodes must ! include a user_agent > 5000 bytes.|
+|nonce(8, uint64_t)|**Random** nonce used to **detect connections to self**. :exclamation:|
+|user_agent(1+, var_str)     |**User Agent** :exclamation: (0x00 if string is 0 bytes long). Sending nodes must ! include a user_agent > 5000 bytes.|
 |stream_numbers(1+, var_int_list)|The stream numbers that the emitting node is **interested in**. Sending nodes must ! include > 160000 stream numbers.|
 
 > **A "verack" packet shall be sent if the version packet was accepted.** Once you have sent and received a verack messages with the remote node, send an **addr message advertising up to 1000 peers of which you are aware**, and **one or more inv messages advertising all of the valid objects of which you are aware**.
@@ -195,7 +195,7 @@
 |inventory(32x?, inv_vect[]) |**Inventory vectors**|
 
 ### object
-> An object is **a message which is shared throughout a stream**. It is the only message which propagates; **all others are only between two nodes**. Objects **have a type, like 'msg', or 'broadcast'**. <font color = red>**To be a valid object, the POW must be done.**</font> The maximum allowable length of an object (**!~-~ the objectPayload**) is **218 bytes**.
+> An object is **a message which is shared throughout a stream**. It is the only message which propagates; **all others are only between two nodes**. Objects **have a type, like 'msg', or 'broadcast'**. **To be a valid object, the POW must be done.** :exclamation: The maximum allowable length of an object (**!~-~ the objectPayload**) is **218 bytes**.
 
 |description(size, data type)|comments    |
 |----------------------------|------------|
@@ -235,7 +235,7 @@
 |nonce_trials_per_byte(1+, var_int)|Used to **calculate the difficulty target of messages accepted by this node**. higher => more difficult the POW before this individual will accept the message. This number is the **average number of nonce trials a node** will have to perform to **meet** the POW requirement. **1000** is the network minimum so any lower values will be automatically raised to 1000.|
 |extra_bytes(1+, var_int)          |Used to **calculate the difficulty target of messages accepted by this node**. higher => more difficult the POW before this individual will accept the message. This number is **added to the data length to make sending small messages more difficult**. **1000** is the network minimum so any lower values will be automatically raised to 1000.  |
 |sig_length(1+, var_int)           |Length of the signature|
-|signature(sig_length, uchar[])    |The **ECDSA** signature which, <font color = red>as of protocol v3, covers the object header starting with the time, appended with the data described in this table down to the extra_bytes.</font>|
+|signature(sig_length, uchar[])    |The **ECDSA** signature which, as of protocol v3, covers the object header starting with the time, appended with the data described in this table down to the extra_bytes. :exclamation:|
 
 #### A version 4 pubkey
 |description(size, data type)      |comments    |
@@ -243,19 +243,19 @@
 |tag(32, uchar[])                  |The tag made up of bytes **32-64** of the **double hash** of the **address data** (see example python code below).|
 |encrypted(?, uchar[])             |**Encrypted pubkey data.**|
 
-> When version 4 pubkeys are created, most of the data in the pubkey is encrypted. This is done in such a way that <font color = red>**only someone who has the Bitmessage address which corresponds to a pubkey can decrypt and use that pubkey.**</font> This prevents people from gathering pubkeys sent around the network and using the data from them to create messages to be used in spam or in flooding attacks.
+> When version 4 pubkeys are created, most of the data in the pubkey is encrypted. This is done in such a way that **only someone who has the Bitmessage address which corresponds to a pubkey can decrypt and use that pubkey.** :exclamation: This prevents people from gathering pubkeys sent around the network and using the data from them to create messages to be used in spam or in flooding attacks.
 >
 > In order to encrypt the pubkey data, **a double SHA-512 hash** is calculated from **the address version number, stream number, and ripe hash of the Bitmessage address that the pubkey corresponds to**. The **first 32 bytes** of this hash are used to create a public and private key pair with which to encrypt and decrypt the pubkey data, using the same algorithm as message encryption (see Encryption). The **remaining 32 bytes** of this hash are added to the **unencrypted** part of the pubkey and used as a **tag**, as above. This allows nodes to determine which pubkey to decrypt when they wish to send a message.
 >
 > In PyBitmessage, the double hash of the address data is calculated using the python code below:
 > **doubleHashOfAddressData = hashlib.sha512(hashlib.sha512(encodeVarint(addressVersionNumber) + encodeVarint(streamNumber) + hash).digest()).digest()**
 
-#### Encrypted data in version 4 pubkeys:(?)
+#### Encrypted data in version 4 pubkeys: :question:
 > same as **A version 3 pubkey** except the below entity
 
 |description(size, data type)      |comments    |
 |----------------------------------|------------|
-|signature(sig_length, uchar[])    |The **ECDSA** signature which covers everything from the object header starting with the time, then appended with the **decrypted data** down to the extra_bytes. <font color = red>This was changed in protocol v3.</font>|
+|signature(sig_length, uchar[])    |The **ECDSA** signature which covers everything from the object header starting with the time, then appended with the **decrypted data** down to the extra_bytes. **This was changed in protocol v3.** :exclamation:|
 
 ### msg
 > Used for **person-to-person messages**. Note that msg objects won't contain a version in the object header until Sun, 16 Nov 2014 22:00:00 GMT.
@@ -264,12 +264,12 @@
 |----------------------------------|------------|
 |encrypted(?, uchar[])             |**Encrypted data**. See Encrypted payload. See also Unencrypted Message Data Format|
 
-### broadcast(?)
-> Users who are subscribed to the sending address will see the message appear in their inbox. Broadcasts are <font color = red>version 4 or 5</font>.
+### broadcast :question:
+> Users who are subscribed to the sending address will see the message appear in their inbox. Broadcasts are **version 4 or 5** :exclamation:.
 >
-> Pubkey objects and **v5** broadcast objects are encrypted the same way: The data encoded in the **sender's Bitmessage address is hashed twice**. The **first 32 bytes** of the resulting hash constitutes the **"private" encryption key** and the **last 32 bytes** constitute a **tag** so that anyone **listening** can easily decide if this particular message is interesting. The sender calculates the public key from the private key and then <font color = red>**encrypts the object with this public key**</font>. Thus anyone who knows the Bitmessage address of the sender of a broadcast or pubkey object can decrypt it.
+> Pubkey objects and **v5** broadcast objects are encrypted the same way: The data encoded in the **sender's Bitmessage address is hashed twice**. The **first 32 bytes** of the resulting hash constitutes the **"private" encryption key** and the **last 32 bytes** constitute a **tag** so that anyone **listening** can easily decide if this particular message is interesting. The sender calculates the public key from the private key and then **encrypts the object with this public key** :exclamation:. Thus anyone who knows the Bitmessage address of the sender of a broadcast or pubkey object can decrypt it.
 >
-> The version of broadcast objects was previously 2 or 3 but was <font color = red>changed to 4 or 5 for protocol v3</font>. Having a broadcast version of **5** indicates that a tag is used which, in turn, is used when the **sender's address version is >=4**.
+> The version of broadcast objects was previously 2 or 3 but was **changed to 4 or 5 for protocol v3** :exclamation:. Having a broadcast version of **5** indicates that a tag is used which, in turn, is used when the **sender's address version is >=4**.
 
 |description(size, data type)|comments    |
 |----------------------------|------------|
@@ -279,7 +279,7 @@
 #### Unencrypted data format:
 |description(size, data type)       |comments    |
 |-------------------------------    |------------|
-|broadcast version(1+, var_int)     |The version number of this broadcast protocol message which is equal to 2 or 3. This is included here so that it can be signed. <font color = red>This is no longer included in protocol v3</font>|
+|broadcast version(1+, var_int)     |The version number of this broadcast protocol message which is equal to 2 or 3. This is included here so that it can be signed. **This is no longer included in protocol v3** :exclamation:|
 |address version(1+, var_int)       |The sender's address version|
 |stream number(1+, var_int)         |The sender's stream number|
 |behavior bitfield(4, uint32_t)	    |A bitfield of optional behaviors and features that can be expected from the **owner of this pubkey**.|
@@ -291,4 +291,4 @@
 |messageLength(1+, var_int)        |The message length in bytes|
 |message(messageLength, uchar[])   |**The message**|
 |sig_length(1+, var_int)           |Length of the signature|
-|signature(sig_length, 	uchar[])   |The signature which did cover the unencrypted data from the broadcast version down through the message. <font color = red>In protocol v3, it covers the unencrypted object header starting with the time, all appended with the decrypted data</font>.|
+|signature(sig_length, 	uchar[])   |The signature which did cover the unencrypted data from the broadcast version down through the message. **In protocol v3, it covers the unencrypted object header starting with the time, all appended with the decrypted data** :exclamation:.|

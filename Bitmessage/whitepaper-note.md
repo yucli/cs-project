@@ -6,7 +6,7 @@
 > - trustless  decentralized  peer‐to‐peer  protocol
 - Users  need  not 
 exchange  any  data  beyond  a  relatively  short  (around  **36  character**) 
-address  to  **ensure  security**  and  they  **need  not  have  any  concept  of 
+[address](https://bitmessage.org/wiki/Address)  to  **ensure  security**  and  they  **need  not  have  any  concept  of 
 public or private keys to use the system** :question:
 - mask non‐content data, like the sender  and receiver of messages, from 
 those **not involved in the communication**
