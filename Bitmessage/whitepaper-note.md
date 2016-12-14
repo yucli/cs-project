@@ -4,10 +4,10 @@
 
 ## abstract
 > - trustless  decentralized  peer‐to‐peer  protocol
-- around  **36  character**
-address  to  ensure  security.
-- no  concept  of 
-public or private keys to use the system
+- Users  need  not 
+exchange  any  data  beyond  a  relatively  short  (around  **36  character**) 
+address  to  **ensure  security**  and  they  **need  not  have  any  concept  of 
+public or private keys to use the system** :question:
 - mask non‐content data, like the sender  and receiver of messages, from 
 those **not involved in the communication**
 
@@ -18,16 +18,16 @@ the sender and receiver** :question: of messages from others
 spoofed**, without relying on trust and without burdening the user with the details of key management
 
 ## Authentication
-> - users  **exchange  a  hash  of  a  public  key  that  also  functions  as  the  user’s 
+> - users  **exchange  a  hash  of  a  [public  key](https://bitmessage.org/wiki/Public_key_to_bitmessage_address)  that  also  functions  as  the  user’s 
 address**.:question:  If  the  public  key  can  be  obtained  by  the  underlying  protocol,  then  it  can  easily  be  hashed  to 
 verify that it belongs to the intended recipient
 - The data exchanged by the user can also include **a version 
-number for forwards capability, a stream number** , and a 
+number for forwards capability, a [stream](https://bitmessage.org/wiki/Stream) number** , and a 
 **checksum** :exclamation:
-- Encoded with **base58 and prepended with recognizable characters (like BM for Bitmessage)** :exclamation:
+- Encoded with **[base58](https://zh.wikipedia.org/wiki/Base58) and prepended with recognizable characters (like BM for Bitmessage)** :exclamation:
 
 ## Message Transfer
-> - a message transfer mechanism similar to Bitcoin’s transaction and block transfer system **but :exclamation: with  a  proof‐of‐work  for  each  message**
+> - a message transfer mechanism similar to Bitcoin’s transaction and block transfer system **but :exclamation: with  a  [proof‐of‐work](https://bitmessage.org/wiki/Proof_of_work)  for  each  message**
 - in order to send a message through the 
 network, a proof‐of‐work must be completed in the form of a **partial hash collision** :question:
 - The difficulty of the 
@@ -69,9 +69,9 @@ sender’s  stream. After  this  process  has  been  carried  out  once,
 second time would be trivial **as the sending node would now already have a list of nodes that are in the 
 destination stream saved** :question:
 
-## Broadcasts 
+## [Broadcasts](https://bitmessage.org/wiki/Broadcast) 
 > - After 
-entering  the  **broadcaster’s  Bitmessage  address  into  a  ‘Subscription’  section  of  their  Bitmessage  client**, 
+entering  the  **broadcaster’s  Bitmessage  address  into  a  [‘Subscription’](https://bitmessage.org/wiki/Subscriptions)  section  of  their  Bitmessage  client**, 
 messages from the broadcaster appear in the user’s inbox.
 - anonymously publish content using an **authenticated identity** :question: to everyone who wishes to listen
 
@@ -82,7 +82,7 @@ messages from the broadcaster appear in the user’s inbox.
 download the objects that they do not have**. :exclamation:
 - If a  node  is  offline  for  more than  two  days,  the  sending  node  will 
 notice that it **never received an acknowledgement and rebroadcasts the message after an additional two 
-days**. It will continue to rebroadcast the message, with **exponential backoff** :question:, forever.
+days**. It will continue to rebroadcast the message, with **[exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff)** :question:, forever.
 - In the worst case, if a 
 user is offline for n days, he must go back online and stay connected for n days (or connect once every 
 two days for n days) in order to receive all of his messages. :question:
