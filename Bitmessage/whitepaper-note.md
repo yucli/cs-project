@@ -7,7 +7,7 @@
 - Users  need  not 
 exchange  any  data  beyond  a  relatively  short  (around  **36  character**) 
 [address](https://bitmessage.org/wiki/Address)  to  **ensure  security**  and  they  **need  not  have  any  concept  of 
-public or private keys to use the system** :question: ```不需要公私鑰?```
+public or private keys to use the system**
 - mask non‐content data, like the sender  and receiver of messages, from 
 those **not involved in the communication**
 
