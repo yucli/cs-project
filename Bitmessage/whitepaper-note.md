@@ -1,6 +1,6 @@
 # Bitmessage whitepaper note
 ## reference
-> This note contents are almost from [whitepaper](https://bitmessage.org/bitmessage.pdf) of Bitmessage with some modifications as well as :exclamation: and :question: for the use of discussing and recognizing how Bitmessage works.
+> This note contents are almost from [whitepaper](https://bitmessage.org/bitmessage.pdf) of Bitmessage with some modifications as well as :exclamation: , :question: and :white_check_mark: for the use of discussing and recognizing how Bitmessage works.
 
 ## abstract
 > - trustless  decentralized  peer‐to‐peer  protocol
@@ -13,13 +13,13 @@ those **not involved in the communication**
 
 ## introduction
 > - **masks 
-the sender and receiver** :question: ```如何做到?而且接收者也要知道傳送者是誰``` of messages from others
+the sender and receiver** of messages from others
 - guarantees that the **sender** of a message **cannot be 
-spoofed** :question: ```如何做到?假使有BM-前綴的他人位址。認證機制為何?```, without relying on trust and without burdening the user with the details of key management
+spoofed** :white_check_mark: ```藉由數位簽章的幫助``` , without relying on trust and without burdening the user with the details of key management
 
 ## Authentication
 > - users  **exchange  a  hash  of  a  [public  key](https://bitmessage.org/wiki/Public_key_to_bitmessage_address)  that  also  functions  as  the  user’s 
-address**.:question: ```公鑰的雜湊當作使用者位址?是BM-前綴的位址?```  If  the  public  key  can  be  obtained  by  the  underlying  protocol,  then  it  can  easily  be  hashed  to 
+address**.:white_check_mark: ```public key應該含encrytion和signing的public part```  If  the  public  key  can  be  obtained  by  the  underlying  protocol,  then  it  can  easily  be  hashed  to 
 verify that it belongs to the intended recipient
 - The data exchanged by the user can also include **a version 
 number for forwards capability, a [stream](https://bitmessage.org/wiki/Stream) number** , and a 
@@ -29,7 +29,7 @@ number for forwards capability, a [stream](https://bitmessage.org/wiki/Stre
 ## Message Transfer
 > - a message transfer mechanism similar to Bitcoin’s transaction and block transfer system **but :exclamation: with  a  [proof‐of‐work](https://bitmessage.org/wiki/Proof_of_work)  for  each  message**
 - in order to send a message through the 
-network, a proof‐of‐work must be completed in the form of a **partial hash collision** :question: ```是指pow結果要符合特定條件的意思嗎?```
+network, a proof‐of‐work must be completed in the form of a **partial hash collision** :white_check_mark: ```兩個初始輸入hash後部分相同```
 - The difficulty of the 
 proof‐of‐work should be **proportional to the size of the message** :exclamation: and should be set such that an average 
 computer must expend an average of **four minutes** of work in order to send a typical message. With the 
@@ -73,7 +73,7 @@ destination stream saved** :question: ```知道對方的nodes的意思?```
 > - After 
 entering  the  **broadcaster’s  Bitmessage  address  into  a  [‘Subscription’](https://bitmessage.org/wiki/Subscriptions)  section  of  their  Bitmessage  client**, 
 messages from the broadcaster appear in the user’s inbox.
-- anonymously publish content using an **authenticated identity** :question: ```是什麼特別的認證身分?``` to everyone who wishes to listen.
+- anonymously publish content using an **authenticated identity** :question: ```匿名和真實性如何實作?``` to everyone who wishes to listen.
 
 ## Behavior when the receiver is offline
 > - An  **object**  is  **a  public  key  request,  a  public  key,  a  person‐to‐person  message,  or  a  broadcast  message**. :exclamation: Objects are broadcast throughout a Bitmessage stream.
@@ -82,10 +82,10 @@ messages from the broadcaster appear in the user’s inbox.
 download the objects that they do not have**. :exclamation:
 - If a  node  is  offline  for  more than  two  days,  the  sending  node  will 
 notice that it **never received an acknowledgement and rebroadcasts the message after an additional two 
-days**. It will continue to rebroadcast the message, with **[exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff)** :question: ```待了解```, forever.
+days**. It will continue to rebroadcast the message, with **[exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff)** :white_check_mark: ```若未收到，傳送天數會指數成長，待了解```, forever.
 - In the worst case, if a 
 user is offline for n days, he must go back online and stay connected for n days (or connect once every 
-two days for n days) in order to receive all of his messages. :question: ```為何?不是每兩天沒收到重送嗎?何須n天?```
+two days for n days) in order to receive all of his messages. :white_check_mark: ```同上，待了解```
 
 ## Passive operating mode :question: ```不明瞭```
 > A particularly paranoid person who wishes to receive messages may operate in an entirely passive mode 
@@ -104,11 +104,11 @@ not then there are several courses of action that can be taken:
 >
 > - **Increase the difficulty** of the proof‐of‐work
 - Have each client distribute x public keys for each public key that they actually use. **Acknowledge 
-messages bound for those public keys but never show the user the messages** :question: ```什麼意思?```. Spammers would 
+messages bound for those public keys but never show the user the messages** :white_check_mark: ```建立多個假帳號，其訊息皆被丟棄，僅一或少數為真實帳號```. Spammers would 
 need x times as much computing power to spam the same number of users.
 - include **extra bits in Bitmessage addresses** and require that those bits be included **in a message**, 
-thus proving that the sender has the Bitmessage address. :question: ```為何?``` **Bots who crawl the web looking for Bitmessage 
-addresses would thwart this option** :question: ```為何?```
+thus proving that the sender has the Bitmessage address. :white_check_mark: ```互相信任的彼此約定好的bits``` **Bots who crawl the web looking for Bitmessage 
+addresses would thwart this option** :white_check_mark: ```可能在網頁上留下bits的相關資訊```
 
 ## Conclusion
 > **Paired with the 
